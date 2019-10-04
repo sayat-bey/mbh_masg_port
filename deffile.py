@@ -328,3 +328,4 @@ def count_inf_description(device):
                     device.description_exc_updown.append(line_list[3])
                 if len(line_list[3]) < 25:
                     device.description_short.append(line_list[3])
+# def
