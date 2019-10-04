@@ -231,6 +231,9 @@ def export_excel(devices, current_time, folder):
     wb = Workbook()
     sheet = wb.active
     sheet.append(["MASG ASR9010",
+                  "0/FT0/SP", "0/FT1/SP",
+                  "0/PS0/M0/SP", "0/PS0/M1/SP", "0/PS0/M2/SP", "0/PS0/M3/SP",
+                  "0/PS1/M0/SP", "0/PS1/M1/SP", "0/PS1/M2/SP", "0/PS1/M3/SP",
                   "0/0/CPU0", "0/0/0", "0/0/1",
                   "0/1/CPU0", "0/1/0", "0/1/1",
                   "0/2/CPU0", "0/2/0", "0/2/1",
@@ -244,6 +247,11 @@ def export_excel(devices, current_time, folder):
     for device in devices:
         if device.connection_status:
             sheet.append([device.hostname,
+                          device.platform["0/FT0/SP"], device.platform["0/FT1/SP"],
+                          device.platform["0/PS0/M0/SP"], device.platform["0/PS0/M1/SP"],
+                          device.platform["0/PS0/M2/SP"], device.platform["0/PS0/M3/SP"],
+                          device.platform["0/PS1/M0/SP"], device.platform["0/PS1/M1/SP"],
+                          device.platform["0/PS1/M2/SP"], device.platform["0/PS1/M3/SP"],
                           device.platform["0/0/CPU0"], device.platform["0/0/0"], device.platform["0/0/1"],
                           device.platform["0/1/CPU0"], device.platform["0/1/0"], device.platform["0/1/1"],
                           device.platform["0/2/CPU0"], device.platform["0/2/0"], device.platform["0/2/1"],
@@ -264,6 +272,8 @@ def export_excel(devices, current_time, folder):
 
 
 def parse_show_platform(device):
+    ft = 0
+    pw = 0
     for line in device.show_platform_log.splitlines():
         line_list = line.split()
         if len(line_list) > 0:
@@ -282,6 +292,10 @@ def parse_show_platform(device):
             elif line_list[0] == r"0/6/CPU0" or line_list[0] == r"0/6/0" or line_list[0] == r"0/6/1":
                 device.platform[line_list[0]] = line_list[1]
             elif line_list[0] == r"0/7/CPU0" or line_list[0] == r"0/7/0" or line_list[0] == r"0/7/1":
+                device.platform[line_list[0]] = line_list[1]
+            elif line_list[0] == r"0/FT0/SP" or line_list[0] == r"0/FT1/SP":
+                device.platform[line_list[0]] = line_list[1]
+            elif r"0/PS0" in line_list[0] or r"0/PS1" in line_list[0]:
                 device.platform[line_list[0]] = line_list[1]
 
 
@@ -328,4 +342,3 @@ def count_inf_description(device):
                     device.description_exc_updown.append(line_list[3])
                 if len(line_list[3]) < 25:
                     device.description_short.append(line_list[3])
-# def

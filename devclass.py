@@ -50,7 +50,18 @@ class CiscoXR:
                          "0/6/1": "N/A",
                          "0/7/CPU0": "N/A",
                          "0/7/0": "N/A",
-                         "0/7/1": "N/A"}
+                         "0/7/1": "N/A",
+                         "0/FT0/SP": "N/A",
+                         "0/FT1/SP": "N/A",
+                         "0/PS0/M0/SP": "N/A",
+                         "0/PS0/M1/SP": "N/A",
+                         "0/PS0/M2/SP": "N/A",
+                         "0/PS0/M3/SP": "N/A",
+                         "0/PS1/M0/SP": "N/A",
+                         "0/PS1/M1/SP": "N/A",
+                         "0/PS1/M2/SP": "N/A",
+                         "0/PS1/M3/SP": "N/A",
+                         }
 
         self.tengig = {"total": None,
                        "up": None,
@@ -73,7 +84,7 @@ class CiscoXR:
         self.ssh_conn.disconnect()
 
     def show_platform(self):
-        self.show_platform_log = self.ssh_conn.send_command(r"show platform")
+        self.show_platform_log = self.ssh_conn.send_command(r"admin show platform")
 
     def show_inf_summary(self):
         self.show_inf_summary_log = self.ssh_conn.send_command(r"show interfaces summary")
